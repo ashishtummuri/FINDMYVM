@@ -1,0 +1,70 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIND MY VM</title>
+  
+<style>
+    body{
+        background-color: whitesmoke;
+    }
+    
+    input{
+        width: 40%;
+        height: 5%;
+        border: 1px;
+        border-radius: 05px;
+        padding: 8px 15px 8px 15px;
+        margin: 10px 0px 15px 0px;
+        box-shadow: 1px 1px 2px 1px grey;
+    }
+</style>
+</head>
+<body>
+    <center>
+    <h1> Search the VM details by its IP address or Host Name</h1>
+    <h1>FIND MY VM</h1>
+       <form action="" method="POST">
+        <input type="text" name="ip" placeholder="Enter the IP To search"> <br>
+        <input type="submit" name = "search" value="Search Data">
+       </form>
+
+
+<?php
+$connection = mysqli_connect("localhost", "root", "");
+$db = mysqli_select_db(connection,"VMdb");
+
+if(isset($_POST['search']))
+{
+    $ip = $_POST['ip'];
+
+    $query = "SELECT * from mitc_inventory where id = '$ip' ";
+    $query_run = mysqli_query($connection,$query);
+
+    while($row = mysqli_fetch_array($query_run))
+    {
+        ?>
+            <form action="" method="POST">
+                <input type = "text" name="ip" value="<?php echo $row['ip'] ?>" /> <br> 
+                <input type = "text" name="host_name" value="<?php echo $row['host_name'] ?>" /> <br>
+                <input type = "text" name="cpu" value="<?php echo $row['cpu'] ?>" /><br>
+                <input type = "text" name="memory" value="<?php echo $row['memory'] ?>" /><br>
+                <input type = "text" name="vcenter" value="<?php echo $row['venter'] ?>" /><br>
+                <input type = "text" name="cluster" value="<?php echo $row['cluster'] ?> " /><br>
+                <input type = "text" name="owner" value="<?php echo $row['owner'] ?>" /><br>
+                <input type = "text" name="application" value="<?php echo $row['application'] ?>" /><br>
+                <input type = "text" name="OS" value="<?php echo $row['OS'] ?>" /><br>
+                <input type = "text" name="host_ip" value="<?php echo $row['host_ip'] ?>" /><br>
+                <input type = "text" name="status" value="<?php echo $row['status'] ?> " /><br>
+                
+
+            </form>
+        <?php>
+    }
+}
+?>
+    </center>
+</body>
+</html>
